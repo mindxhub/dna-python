@@ -41,13 +41,5 @@ class ChainHashTable:
         return None
 
     def _hash(self, key: str) -> int:
-        key: int = self._convert_key_to_num(key)
+        key: int = hash(key)
         return key % len(self.__bucket)
-
-    def _convert_key_to_num(self, key: str) -> int:
-        # TODO: Update this function, for now it assumes all key can be
-        # convert to number
-        try:
-            return int(key)
-        except:
-            return round(random.random() * 100)
