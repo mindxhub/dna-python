@@ -17,6 +17,13 @@ class TestChainHashTable(unittest.TestCase):
         self.assertEqual(ht.search("3"), "b")
         ht.insert("11", "c")
         self.assertEqual(ht.search("11"), "c")
+        # Key not exist
+        self.assertEqual(ht.search("88"), None)
+
+    def test_remove(self):
+        ht = ChainHashTable(8)
+        # Remove from empty hash table should return None
+        self.assertEqual(ht.remove("8"), None)
 
     def test_all(self):
         ht = ChainHashTable(8)
