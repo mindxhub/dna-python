@@ -17,6 +17,9 @@ class ChainHashTable:
             self.__bucket.append(Node(None, None))
 
     def insert(self, key: str, val: Union[str, float]) -> None:
+        """
+        Insert a new key-value pair to a random hashed bucket.
+        """
         node: Node = self.__bucket[self._hash(key)]
         while node.next:
             node = node.next
@@ -25,6 +28,9 @@ class ChainHashTable:
         node.next = Node(key, val)
 
     def remove(self, key: str):
+        """
+        Remove a key-value pair if the key is found, else do nothing.
+        """
         node: Node = self.__bucket[self._hash(key)]
         while node and node.next:
             next_node = node.next
@@ -33,6 +39,10 @@ class ChainHashTable:
             node = next_node
 
     def search(self, key: str) -> Union[str, float, None]:
+        """
+        Find the value given a key in the HashTable. If the key is not found,
+        return None.
+        """
         node: Node = self.__bucket[self._hash(key)]
         while node:
             if node.key == key:
@@ -41,5 +51,8 @@ class ChainHashTable:
         return None
 
     def _hash(self, key: str) -> int:
+        """
+        Decide which bucket a key should belong to.
+        """
         key: int = hash(key)
         return key % len(self.__bucket)
