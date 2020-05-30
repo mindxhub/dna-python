@@ -20,22 +20,22 @@ class TestChainHashTable(unittest.TestCase):
 
     def test_all(self):
         ht = ChainHashTable(8)
-        self.assertTrue(ht.insert("3", "a"))
+        ht.insert("3", "a")
         self.assertEqual(ht.search("3"), "a")
-        self.assertTrue(ht.insert("3", "b"))
+        ht.insert("3", "b")
         self.assertEqual(ht.search("3"), "b")
-        self.assertTrue(ht.insert("11", "c"))
+        ht.insert("11", "c")
         self.assertEqual(ht.search("11"), "c")
-        self.assertTrue(ht.insert("5", "d"))
-        self.assertTrue(ht.remove("11"))
-        self.assertFalse(ht.remove("82"))
-        self.assertEqual(ht.search("11"), -1)
+        ht.insert("5", "d")
+        ht.remove("11")
+        ht.remove("82")
+        self.assertEqual(ht.search("11"), None)
         self.assertEqual(ht.search("5"), "d")
-        # remove at end
+        # Remove at end
         ht.insert("19", "e")
         ht.insert("27", "e")
-        self.assertTrue(ht.remove("27"))
-        self.assertFalse(ht.remove("28"))
+        ht.remove("27")
+        self.assertEqual(ht.search("27"), None)
 
 
 if __name__ == "__main__":
