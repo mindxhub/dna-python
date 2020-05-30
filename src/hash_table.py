@@ -16,33 +16,29 @@ class ChainHashTable:
         for _ in range(n):
             self.__bucket.append(Node(None, None))
 
-    def insert(self, key: str, val: Union[str, float]) -> bool:
+    def insert(self, key: str, val: Union[str, float]) -> None:
         node: Node = self.__bucket[self._hash(key)]
         while node.next:
             node = node.next
             if node.key == key:
                 node.val = val
-                return True
         node.next = Node(key, val)
-        return True
 
-    def remove(self, key: str) -> bool:
+    def remove(self, key: str):
         node: Node = self.__bucket[self._hash(key)]
         while node and node.next:
             next_node = node.next
             if next_node.key == key:
                 node.next = next_node.next
-                return True
             node = next_node
-        return False
 
-    def search(self, key: str) -> float:
+    def search(self, key: str) -> Union[str, float, None]:
         node: Node = self.__bucket[self._hash(key)]
         while node:
             if node.key == key:
                 return node.val
             node = node.next
-        return -1
+        return None
 
     def _hash(self, key: str) -> int:
         key: int = self._convert_key_to_num(key)
