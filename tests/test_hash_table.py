@@ -4,24 +4,10 @@ from src.hash_table import ChainHashTable
 
 
 class TestChainHashTable(unittest.TestCase):
-    def test_insert(self):
+    def test_reference_init(self):
         ht = ChainHashTable(8)
-        self.assertTrue(ht.insert("3", "a"))
-        self.assertTrue(ht.insert("3", "b"))
-        self.assertTrue(ht.insert("11", "c"))
-
-    def test_remove(self):
-        ht = ChainHashTable(8)
-        ht.insert("3", "a")
-        self.assertTrue(ht.remove("3"))
-        ht.insert("4", "b")
-        ht.insert("5", "c")
-        self.assertTrue(ht.remove("4"))
-        ht.insert("6", "d")
-        self.assertTrue(ht.remove("5"))
-        self.assertTrue(ht.remove("6"))
-        self.assertFalse(ht.remove("8"))
-        self.assertFalse(ht.remove("10"))
+        ht._ChainHashTable__bucket[0].val = 1
+        self.assertFalse(ht._ChainHashTable__bucket[1].val == 1)
 
     def test_search(self):
         ht = ChainHashTable(8)

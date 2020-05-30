@@ -12,7 +12,9 @@ class Node:
 
 class ChainHashTable:
     def __init__(self, n: int):
-        self.__bucket = [Node(None, None)] * n
+        self.__bucket = []
+        for _ in range(n):
+            self.__bucket.append(Node(None, None))
 
     def insert(self, key: str, val: Union[str, float]) -> bool:
         node: Node = self.__bucket[self._hash(key)]
