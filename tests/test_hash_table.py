@@ -24,6 +24,19 @@ class TestChainHashTable(unittest.TestCase):
         ht = ChainHashTable(8)
         # Remove from empty hash table should return None
         self.assertEqual(ht.remove("8"), None)
+        # Remove from empty should leave size == 0 rather than -1
+        self.assertEqual(ht.size(), 0)
+
+    def test_insert(self):
+        ht = ChainHashTable(8)
+        ht.insert("a", 1)
+        ht.insert("b", 2)
+        self.assertEqual(ht.size(), 2)
+        ht.insert("b", 4)
+        # Insert to existing key is overwriting so size should not increase
+        self.assertEqual(ht.size(), 2)
+        ht.insert("c", 5)
+        self.assertEqual(ht.size(), 3)
 
     def test_all(self):
         ht = ChainHashTable(8)
@@ -44,6 +57,19 @@ class TestChainHashTable(unittest.TestCase):
         ht.remove("27")
         self.assertEqual(ht.search("27"), None)
 
+    def test_table_doubling(self):
+        INITIAL_SIZE = 4
+        ht = ChainHashTable(INITIAL_SIZE)
+        ht.insert("a", 1)
+        self.assertEqual(ht.cap(), INITIAL_SIZE)
+        ht.insert("b", 2)
+        self.assertEqual(ht.cap(), 2 * INITIAL_SIZE)
+        ht.insert("b", 3)
+        self.assertEqual(ht.cap(), 2 * INITIAL_SIZE)
+        ht.insert("c", 4)
+        self.assertEqual(ht.cap(), 2 * INITIAL_SIZE)
+        ht.insert("d", 5)
+        self.assertEqual(ht.cap(), 2 * 2 * INITIAL_SIZE)
 
 if __name__ == "__main__":
     unittest.main()
