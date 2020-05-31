@@ -48,8 +48,7 @@ class ChainHashTable:
             next_node = node.next
             if next_node.key == key:
                 node.next = next_node.next
-                if self.size() > 0:
-                    self.__size -= 1
+                self.__size -= 1
             node = next_node
 
     def search(self, key: str) -> Union[str, float, None]:
