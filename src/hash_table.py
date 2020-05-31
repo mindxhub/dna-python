@@ -11,15 +11,15 @@ class Node:
 
 
 class ChainHashTable:
-    def __init__(self, n: int):
-        self.__cap = n
+    def __init__(self, capacity: int = 8):
+        self.__capacity = capacity
         self.__size = 0
         self.__bucket = []
-        for _ in range(n):
+        for _ in range(capacity):
             self.__bucket.append(Node(None, None))
 
-    def cap(self) -> int:
-        return self.__cap
+    def capacity(self) -> int:
+        return self.__capacity
 
     def size(self) -> int:
         return self.__size
@@ -36,7 +36,7 @@ class ChainHashTable:
                 return
         node.next = Node(key, val)
         self.__size += 1
-        if self.size() >= self.cap() / 2:
+        if self.size() >= self.capacity() / 2:
             self.__table_doubling()
 
     def remove(self, key: str):
@@ -72,7 +72,7 @@ class ChainHashTable:
         return key % len(self.__bucket)
 
     def __table_doubling(self) -> None:
-        new_ht = ChainHashTable(self.cap() * 2)
+        new_ht = ChainHashTable(self.capacity() * 2)
         for n in self.__bucket:
             node = n.next
             while node:
