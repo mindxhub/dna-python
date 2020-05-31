@@ -38,7 +38,7 @@ class TestChainHashTable(unittest.TestCase):
         ht.insert("c", 5)
         self.assertEqual(ht.size(), 3)
 
-    def test_all(self):
+    def test_normal_cases(self):
         ht = ChainHashTable(8)
         ht.insert("3", "a")
         self.assertEqual(ht.search("3"), "a")
