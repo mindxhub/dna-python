@@ -24,7 +24,7 @@ class ChainHashTable:
     def size(self) -> int:
         return self.__size
 
-    def insert(self, key: str, val: Union[str, float]) -> None:
+    def insert(self, key: str, val: Union[str, float]):
         """
         Insert a new key-value pair to a random hashed bucket.
         """
