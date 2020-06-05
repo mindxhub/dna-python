@@ -1,16 +1,14 @@
 from __future__ import annotations
 from typing import Union
-import random
-
-
-class Node:
-    def __init__(self, key: str, val: Union[str, float], next: Node = None):
-        self.key = key
-        self.val = val
-        self.next = next
 
 
 class ChainHashTable:
+    class Node:
+        def __init__(self, key: str, val: Union[str, float], next: ChainHashTable.Node = None):
+            self.key = key
+            self.val = val
+            self.next = next
+
     def __init__(self, capacity: int = 8):
         self.__initiate(capacity)
 
@@ -19,7 +17,7 @@ class ChainHashTable:
         self.__size = 0
         self.__bucket = []
         for _ in range(capacity):
-            self.__bucket.append(Node(None, None))
+            self.__bucket.append(self.Node(None, None))
 
     def capacity(self) -> int:
         return self.__capacity
@@ -31,13 +29,13 @@ class ChainHashTable:
         """
         Insert a new key-value pair to a random hashed bucket.
         """
-        node: Node = self.__bucket[self.__hash(key)]
+        node: self.Node = self.__bucket[self.__hash(key)]
         while node.next:
             node = node.next
             if node.key == key:
                 node.val = val
                 return
-        node.next = Node(key, val)
+        node.next = self.Node(key, val)
         self.__size += 1
         if self.size() >= self.capacity() / 2:
             self.__table_doubling()
@@ -46,7 +44,7 @@ class ChainHashTable:
         """
         Remove a key-value pair if the key is found, else do nothing.
         """
-        node: Node = self.__bucket[self.__hash(key)]
+        node: self.Node = self.__bucket[self.__hash(key)]
         while node and node.next:
             next_node = node.next
             if next_node.key == key:
@@ -59,7 +57,7 @@ class ChainHashTable:
         Find the value given a key in the HashTable. If the key is not found,
         return None.
         """
-        node: Node = self.__bucket[self.__hash(key)]
+        node: self.Node = self.__bucket[self.__hash(key)]
         while node:
             if node.key == key:
                 return node.val
