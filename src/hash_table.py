@@ -12,6 +12,9 @@ class Node:
 
 class ChainHashTable:
     def __init__(self, capacity: int = 8):
+        self.__initiate(capacity)
+
+    def __initiate(self, capacity):
         self.__capacity = capacity
         self.__size = 0
         self.__bucket = []
@@ -70,15 +73,17 @@ class ChainHashTable:
         key: int = hash(key)
         return key % len(self.__bucket)
 
-    def __table_doubling(self) -> None:
-        new_ht = ChainHashTable(self.capacity() * 2)
-        for n in self.__bucket:
+    def __table_doubling(self):
+        # Copy current bucket
+        temp_bucket = self.__bucket[:]
+        self.__initiate(self.capacity() * 2)
+
+        # Migrate old nodes
+        len_temp_bucket = len(temp_bucket)
+        for i in range(len_temp_bucket):
+            n = temp_bucket[i]
             node = n.next
             while node:
                 if node.key:
-                    new_ht.insert(key=node.key, val=node.val)
+                    self.insert(key=node.key, val=node.val)
                 node = node.next
-
-        self.__bucket = new_ht.__bucket
-        self.__size = new_ht.__size
-        self.__cap = new_ht.__cap

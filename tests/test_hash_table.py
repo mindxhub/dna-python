@@ -61,15 +61,19 @@ class TestChainHashTable(unittest.TestCase):
         INITIAL_SIZE = 4
         ht = ChainHashTable(INITIAL_SIZE)
         ht.insert("a", 1)
-        self.assertEqual(ht.cap(), INITIAL_SIZE)
+        self.assertEqual(ht.capacity(), INITIAL_SIZE)
         ht.insert("b", 2)
-        self.assertEqual(ht.cap(), 2 * INITIAL_SIZE)
+        self.assertEqual(ht.capacity(), 2 * INITIAL_SIZE)
         ht.insert("b", 3)
-        self.assertEqual(ht.cap(), 2 * INITIAL_SIZE)
+        self.assertEqual(ht.capacity(), 2 * INITIAL_SIZE)
         ht.insert("c", 4)
-        self.assertEqual(ht.cap(), 2 * INITIAL_SIZE)
+        self.assertEqual(ht.capacity(), 2 * INITIAL_SIZE)
         ht.insert("d", 5)
-        self.assertEqual(ht.cap(), 2 * 2 * INITIAL_SIZE)
+        self.assertEqual(ht.capacity(), 2 * 2 * INITIAL_SIZE)
+        # Test if a key still maps to the same value
+        self.assertEqual(ht.search("c"), 4)
+        self.assertEqual(ht.search("b"), 3)
+
 
 if __name__ == "__main__":
     unittest.main()
