@@ -33,6 +33,9 @@ class AVLTree:
     def insert(self, val: float):
         self.head = self.__insert(self.head, val)
 
+    def remove(self, val: float):
+        self.head = self.__remove(self.head, val)
+
     def __insert(self, root: AVLTree.Node, val: float):
         """
         Insert a new value into the tree while maintain the AVL structure.
@@ -55,24 +58,43 @@ class AVLTree:
                 self.__get_height(root.right)))
 
         balance = self.__get_balance(root)
-        # Left left case
-        if balance < -1 and self.__get_balance(root.right) == -1:
-            root = self.__rotate_left(root)
+        return self.__rotate(root, balance)
 
-        # Right right case
-        if balance > 1 and self.__get_balance(root.left) == 1:
-            root = self.__rotate_right(root)
+    def __remove(self, root: AVLTree.Node, val: float):
+        """
+        Remove a value from the tree while maintain the AVL structure.
+        Removal should takes O(logN) in time complexity.
+        Needs recursion to update height of each node.
+        """
+        if root is None:
+            return root
+        if val < root.val:
+            root.left = self.__remove(root.left, val)
+        elif val > root.val:
+            root.right = self.__remove(root.right, val)
+        else:
+            if root.left is None:
+                temp = root.right
+                root = None
+                return temp
+            elif root.right is None:
+                temp = root.left
+                root = None
+                return temp
 
-        # Left right case
-        if balance > 1 and self.__get_balance(root.left) == -1:
-            root.left = self.__rotate_left(root.left)
-            root = self.__rotate_right(root)
+            min_value_node = self.__get_min_value_node(root.right)
+            root.val = min_value_node.val
+            root.right = self.__remove(root.right, min_value_node.val)
 
-        # Right left case
-        if balance < -1 and self.__get_balance(root.right) == 1:
-            root.right = self.__rotate_right(root.right)
-            root = self.__rotate_left(root)
-        return root
+        root.height = (
+            1 +
+            max(
+                self.__get_height(root.left),
+                self.__get_height(root.right))
+        )
+
+        balance = self.__get_balance(root)
+        return self.__rotate(root, balance)
 
     def __get_height(self, root: AVLTree.Node) -> int:
         if root is None:
@@ -124,9 +146,27 @@ class AVLTree:
                 self.__get_height(new_root.right)))
         return new_root
 
-    def remove(self, val: float):
-        """
-        Remove a value from the tree while maintain the AVL structure.
-        Removal should takes O(logN) in time complexity.
-        """
-        pass
+    def __get_min_value_node(self, node):
+        if node.left is None:
+            return node
+        return self.__get_min_value_node(node.left)
+
+    def __rotate(self, root: AVLTree.Node, balance: int) -> AVLTree.Node:
+        # Right right case
+        if balance < -1 and self.__get_balance(root.right) == -1:
+            root = self.__rotate_left(root)
+
+        # Left left case
+        if balance > 1 and self.__get_balance(root.left) == 1:
+            root = self.__rotate_right(root)
+
+        # Left right case
+        if balance > 1 and self.__get_balance(root.left) == -1:
+            root.left = self.__rotate_left(root.left)
+            root = self.__rotate_right(root)
+
+        # Right left case
+        if balance < -1 and self.__get_balance(root.right) == 1:
+            root.right = self.__rotate_right(root.right)
+            root = self.__rotate_left(root)
+        return root
