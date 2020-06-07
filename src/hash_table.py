@@ -3,6 +3,7 @@ from typing import Union
 
 
 class ChainHashTable:
+    TABLE_EXPAND_THRESHOLD = 2
     class Node:
         def __init__(self, key: str, val: Union[str, float], next: ChainHashTable.Node = None):
             self.key = key
@@ -37,7 +38,7 @@ class ChainHashTable:
                 return
         node.next = self.Node(key, val)
         self.__size += 1
-        if self.size() >= self.capacity() / 2:
+        if self.size() >= self.capacity() / self.TABLE_EXPAND_THRESHOLD:
             self.__table_doubling()
 
     def remove(self, key: str):
@@ -74,7 +75,7 @@ class ChainHashTable:
     def __table_doubling(self):
         # Copy current bucket
         temp_bucket = self.__bucket[:]
-        self.__initiate(self.capacity() * 2)
+        self.__initiate(self.capacity() * self.TABLE_EXPAND_THRESHOLD)
 
         # Migrate old nodes
         len_temp_bucket = len(temp_bucket)
