@@ -109,11 +109,11 @@ class DoublyLinkedList:
             while (current):
                 if (count == index):
                     before = current
-                    after = current.next
+                    after = current.after
                     break
                 count += 1
             node.before = before
-            before.next = node
+            before.after = node
             node.after = after
             after.before = node
         length += 1

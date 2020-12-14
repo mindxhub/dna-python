@@ -20,8 +20,10 @@ class Array:
         if (count == 0):
             items[0] = item
         else:
+            if (count == capacity):
+                capacity *= 2
             items[count] = item
-        self.count += 1
+            self.count += 1
         
     def insert(self, item, index):
         if (index < 0 or index > count):
@@ -36,6 +38,8 @@ class Array:
         if (count == 0):
             return None
         else:
+            if (self.count == capacity * 0.2 + 1):
+                capacity /= 2
             count -= 1
             return pop(items)
     
