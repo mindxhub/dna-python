@@ -1,7 +1,9 @@
+import unittest
+
 class Array:
     def __init__(self):
-        self.allocated = 0
         self.items = []
+        self.allocated = 0
         self.count = self.count(self.items)
 
     def size(self):
@@ -71,11 +73,59 @@ class Array:
     def __str__(self):
         return '[' + ', '.join([str(e) for e in self.items]) + ']'
 
-
-if __name__ == '__main__':
+class TestArray(unittest.TestCase):
+    
     arr = Array()
-    arr.append(0)
-    arr.append(4)
-    arr.insert(3, 1)
-    arr.insert(2, 1)
-    arr.insert(1, 1)
+    
+    def test_size(self):
+        self.assertEqual(self.arr.size(), 0)
+
+    def test_capacity(self):
+        self.assertEqual(self.arr.capacity(), 0)
+
+    def test_isEmpty(self):
+        self.assertEqual(self.arr.isEmpty(), True)
+
+    def test_itemAt(self):
+        self.assertEqual(self.arr.itemAt(1), None)
+
+    def test_append(self):
+        arr = Array()
+        arr.append(0)
+        self.assertEqual(arr.size(), 1)
+        self.assertEqual(arr.capacity(), 1)
+        self.assertEqual(arr.itemAt(0), 0)
+
+    def test_insert(self):
+        arr = Array()
+        arr.append(0)
+        arr.insert(2, 1)
+        self.assertEqual(arr.size(), 2)
+        self.assertEqual(arr.capacity(), 2)
+        self.assertEqual(arr.itemAt(1), 2)
+        arr.insert(1, 1)
+        self.assertEqual(arr.size(), 3)
+        self.assertEqual(arr.capacity(), 4)
+        self.assertEqual(arr.itemAt(1), 1)
+
+    def test_pop(self):
+        arr = Array()
+        arr.append(0)
+        arr.append(1)
+        self.assertEqual(arr.pop(), 1)
+        self.assertEqual(arr.size(), 1)
+        self.assertEqual(arr.capacity(), 2)
+        self.assertEqual(arr.itemAt(1), None)
+        
+    def removeAt(self):
+        arr = Array()
+        arr.append(0)
+        arr.append(1)
+        arr.append(2)
+        self.removeAt(1)
+        self.assertEqual(arr.size(), 2)
+        self.assertEqual(arr.capacity(), 4)
+        self.assertEqual(arr.itemAt(1), 2)
+        
+if __name__ == '__main__':
+    unittest.main()
