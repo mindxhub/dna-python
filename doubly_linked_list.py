@@ -98,8 +98,6 @@ class DoublyLinkedList:
         return self.tail.value
 
     def insert(self, value, index):
-        print(self.length)
-        print(index)
         if (index < 0 or index > self.length):
             return
         elif (index == 0):
