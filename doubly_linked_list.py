@@ -1,3 +1,5 @@
+import unittest
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -96,6 +98,8 @@ class DoublyLinkedList:
         return self.tail.value
 
     def insert(self, value, index):
+        print(self.length)
+        print(index)
         if (index < 0 or index > self.length):
             return
         elif (index == 0):
@@ -119,7 +123,7 @@ class DoublyLinkedList:
             before.after = node
             node.after = after
             after.before = node
-        self.length += 1
+            self.length += 1
 
     def removeAt(self, index):
         if (index < 0 or index > self.length):
@@ -142,14 +146,72 @@ class DoublyLinkedList:
                     break;
                 current = current.after
                 count += 1
-        self.length -= 1
+            self.length -= 1
+        
+class TestLinkedList(unittest.TestCase):
+    
+    def test_size(self):
+        lst = DoublyLinkedList()
+        self.assertEqual(lst.size(), 0)
+
+    def test_isEmpty(self):
+        lst = DoublyLinkedList()
+        self.assertEqual(lst.isEmpty(), True)
+        lst.pushFront(Node(1))
+        self.assertEqual(lst.isEmpty(), False)
+    
+    def test_valueAt(self):
+        lst = DoublyLinkedList()
+        lst.pushFront(Node(0))
+        self.assertEqual(lst.valueAt(0).value, 0)
+        self.assertEqual(lst.valueAt(1), None)
+    
+    def test_pushPopFront(self):
+        lst = DoublyLinkedList()
+        self.assertEqual(lst.valueAt(1), None)
+        lst.pushFront(Node(1))
+        lst.pushFront(Node(0))
+        self.assertEqual(lst.valueAt(1).value, 1)
+        self.assertEqual(lst.popFront().value, 0)
+        self.assertEqual(lst.valueAt(0).value, 1)
+    
+    def test_pushPopBack(self):
+        lst = DoublyLinkedList()
+        self.assertEqual(lst.valueAt(1), None)
+        lst.pushBack(Node(0))
+        lst.pushBack(Node(1))
+        self.assertEqual(lst.valueAt(1).value, 1)
+        self.assertEqual(lst.popBack().value, 1)
+        self.assertEqual(lst.valueAt(0).value, 0)
+    
+    def test_front(self):
+        lst = DoublyLinkedList()
+        lst.pushFront(Node(0))
+        self.assertEqual(lst.front().value, 0)
+        
+    def test_back(self):
+        lst = DoublyLinkedList()
+        lst.pushBack(Node(0))
+        lst.pushBack(Node(1))
+        self.assertEqual(lst.back().value, 1)
+    
+    def test_insert(self):
+        lst = DoublyLinkedList()
+        lst.insert(Node(1), 0)
+        lst.insert(Node(0), 0)
+        lst.insert(Node(2), 2)
+        self.assertEqual(lst.front().value, 0)
+        self.assertEqual(lst.valueAt(1).value, 1)
+        self.assertEqual(lst.back().value, 2)
+        
+    def test_removeAt(self):
+        lst = DoublyLinkedList()
+        lst.insert(Node(1), 0)
+        lst.insert(Node(0), 0)
+        lst.insert(Node(2), 2)
+        lst.removeAt(1)
+        self.assertEqual(lst.front().value, 0)
+        self.assertEqual(lst.valueAt(1).value, 2)
         
 if __name__ == '__main__':
-    lst = DoublyLinkedList()
-    lst.pushFront(Node(2))
-    lst.pushFront(Node(0))
-    lst.pushBack(Node(5))
-    lst.insert(Node(1), 1)
-    lst.insert(Node(3), 3)
-    lst.insert(Node(4), 4)
-    lst.removeAt(3)
+    unittest.main()
