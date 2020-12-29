@@ -10,8 +10,9 @@ class StackNode:
 
 class StackLinkedList:
     def __init__(self):
-        self.head;
-        self.tail;
+        self.head
+        self.tail
+        self.size = 0
     
     def add(self, item):
         newNode = StackNode(item)
@@ -20,6 +21,7 @@ class StackLinkedList:
         self.tail = newNode
         if (self.head == None):
             self.head = self.tail
+        self.size += 1
     
     def pop(self):
         if (self.head == None):
@@ -28,6 +30,7 @@ class StackLinkedList:
         self.tail = self.tail.prev
         if (self.tail == None):
             self.head = None
+        self.size -= 1
         return oldTail
 
     def front(self):

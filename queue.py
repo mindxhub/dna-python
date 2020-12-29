@@ -10,25 +10,28 @@ class QueueLinkedList:
     def __init__(self):
         self.head;
         self.tail;
+        self.size = 0
     
-    def add(self, item):
+    def enqueue(self, item):
         newNode = QueueNode(item)
         if (self.tail != None):
             self.tail.next = newNode
         self.tail = newNode
         if (self.head == None):
             self.head = self.tail
+        self.size += 1
     
-    def pop(self):
+    def dequeue(self):
         if (self.head == None):
             return
         oldHead = self.head
         self.head = self.head.next
         if (self.head == None):
             self.tail = None
+        self.size -= 1
         return oldHead
 
-    def front(self):
+    def peek(self):
         if (self.head == None):
             return
         return self.head.value
@@ -42,12 +45,12 @@ class QueueArray:
         self.allocated = 0
         self.count = self.count(self.items)
     
-    def add(self, item):
+    def enqueue(self, item):
         self.items += [item]
         self.updateAlloc()
         self.count += 1
     
-    def pop(self):
+    def dequeue(self):
         if (self.count == 0):
             return None
         else:
@@ -57,7 +60,7 @@ class QueueArray:
             self.items = self.items[1:]
             return firstItem
 
-    def front(self):
+    def peek(self):
         return self.queue[0]
     
     def isEmpty(self):
