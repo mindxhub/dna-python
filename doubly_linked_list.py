@@ -51,14 +51,15 @@ class DoublyLinkedList:
             oldHead = self.head
             if (self.length == 1):
                 self.head = None
-                self.head = None
+                self.head = None        
+                self.length -= 1
                 return oldHead.value
             else:
                 nextHead = oldHead.after
                 nextHead.before = None
-                self.head = nextHead
+                self.head = nextHead        
+                self.length -= 1
                 return oldHead.value
-        self.length -= 1
 
     def pushBack(self, value):
         node = Node(value)
@@ -79,13 +80,26 @@ class DoublyLinkedList:
             if (self.length == 1):
                 self.head = None
                 self.tail = None
+                self.length -= 1
                 return oldTail.value
             else:
                 nextTail = oldTail.before
                 nextTail.after = None
                 self.tail = nextTail
+                self.length -= 1
                 return oldTail.value
-        self.length -= 1
+        
+    def remove(self, value):
+        if (self.length == 0):
+            return
+        else:
+            cur = self.head
+            while cur != None:
+                if cur.value == value:
+                    cur.before.next = cur.after
+                    cur.after.before = cur.before
+                    self.length -= 1
+                cur = cur.next
 
     def front(self):
         if (self.length == 0):
