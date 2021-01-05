@@ -3,14 +3,13 @@ from doubly_linked_list import DoublyLinkedList
 
 class Hashmap:
     def __init__(self):
-        hashmap = {}
-        buckets = 0
+        hashmap = [None] * 10
 
     def hashFunction(self, value):
         return value % 5
 
     def checkExist(self, value, hashValue):
-        if self.buckets == 0:
+        if self.hashmap[hashValue] == None:
             return False
         lst = self.hashmap[hashValue]
         cur = lst.head
@@ -22,7 +21,7 @@ class Hashmap:
 
     def insertToHashmap(self, value):
         hashValue = self.hashFunction(value)
-        if self.hashmap.has_key(hashValue):
+        if hashValue in self.hashmap:
             self.hashmap[hashValue].pushBack(value)
         else:
             newLinkList = DoublyLinkedList()
@@ -31,7 +30,7 @@ class Hashmap:
 
     def removeFromHashmap(self, value):
         hashValue = self.hashFunction(value)
-        if self.hashmap.has_key(hashValue):
+        if hashValue in self.hashmap:
             self.hashmap[hashValue].remove(value)
             if self.hashmap[hashValue].length == 0:
-                self.hashmap.pop(hashValue, None)
+                self.hashmap[hashValue] = None
